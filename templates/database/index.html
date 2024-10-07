@@ -356,9 +356,11 @@
             <fieldset style="margin-bottom: 20px;">
                 <legend class="data-submission-legend">Select the database</legend>
                 <div class="checkbox-group">
-                    <label><input type="radio" name="field" value="patient_studies" onchange="loadColumns1(this)"> Submit In Patient Studies</label>
+                  <label><input type="radio" name="field" value="cell_line" onchange="loadColumns1(this)"> Submit In Cell Line</label>
+                   
                     <label><input type="radio" name="field" value="animal_studies" onchange="loadColumns1(this)"> Submit In Animal Studies</label>
-                    <label><input type="radio" name="field" value="cell_line" onchange="loadColumns1(this)"> Submit In Cell Line</label>
+                    <label><input type="radio" name="field" value="patient_studies" onchange="loadColumns1(this)"> Submit In Patient Studies</label>
+                    
                 </div>
             </fieldset>
             
@@ -383,7 +385,7 @@
             </fieldset>
             
             <div class="data-submission-form-buttons">
-                <button type="submit" class="data-submission-button">Submit Dataset</button>
+                <button type="submit"  onclick="submitData()"  class="data-submission-button">Submit Dataset</button>
                 <button type="reset" class="data-submission-button">Clear Data</button>
             </div>
         </form>
@@ -921,7 +923,67 @@ CanIMMDB is a manually curated resource which provides comprehensive information
   
 
 <script src="{% static 'js/script.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
 <script>
+  function submitData() {
+    // Get the selected database (cell_line, animal_studies, patient_studies)
+    const selectedDatabase = document.querySelector('input[name="field"]:checked').value;
+
+    // Collect form data
+    const formData = {
+        submitters_name: document.getElementById('submitters_name').value,
+        email_address: document.getElementById('email_address').value,
+        mailing_address: document.getElementById('mailing_address').value,
+        comment: document.getElementById('comment').value,
+        selected_database: selectedDatabase // Add the selected database to the form data
+    };
+
+    // Add dynamic fields data (generated based on the selected database)
+    const dynamicFields = document.getElementById('dynamic-fields').querySelectorAll('input');
+    dynamicFields.forEach(field => {
+        formData[field.name] = field.value;
+    });
+
+    // Send form data to the backend via an AJAX request
+    fetch('/submit-data/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken') // Ensure CSRF protection for Django
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Data submitted successfully!');
+        } else {
+            alert('Error submitting data: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred during submission.');
+    });
+}
+
+// Helper function to get CSRF token (for Django)
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
   function fillExample2DForm() {
     document.getElementById('smilesInput2D').value = 'COC1=CC=CC2=C1C(=O)C1=C(O)C3=C(C[C@](O)(C[C@@H]3O[C@H]3C[C@H](N)[C@H](O)[C@H](C)O3)C(C)=O)C(O)=C1C2=O';
     document.getElementById('threshold2D').value = '0.5';
@@ -938,6 +1000,7 @@ function fillExamplesubsForm() {
     document.getElementById('smilesInputsubs').value = 'COC1=CC=CC2=C1C(=O)C1=C(O)C3=C(C[C@](O)(C[C@@H]3O[C@H]3C[C@H](N)[C@H](O)[C@H](C)O3)C(C)=O)C(O)=C1C2=O';
     
 }
+
 </script>
 </body>
 </html>

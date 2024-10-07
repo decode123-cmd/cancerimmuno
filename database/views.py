@@ -9,7 +9,12 @@ from .tools import *
 from rdkit import Chem
 from rdkit.Chem import AllChem, DataStructs, MACCSkeys
 from rdkit.Chem import rdMolAlign
-
+import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from sqlalchemy import create_engine, MetaData, Table, Column, String, Integer
+from sqlalchemy.exc import ProgrammingError
+from django.conf import settings
 
 # Function to load data from a specified table
 # Function to load data from a specified table
@@ -589,3 +594,62 @@ def get_columns1(request):
     
 
     return JsonResponse({'success': True, 'columns': column_names})
+
+
+# View to handle the form submission
+@csrf_exempt
+def submit_data(request):
+    # Define the connection URL
+    connection_url = "postgresql://postgres:password@yourhost:port/dbname"
+    engine = create_engine(connection_url, echo=False)
+    if request.method == 'POST':
+        try:
+            # Parse the JSON data from the request
+            data = json.loads(request.body)
+
+            selected_database = data.pop('selected_database')
+
+            # Map the selected database to a table name
+            table_mapping = {
+                'cell_line': 'user_cell_line',
+                'animal_studies': 'user_animal_studies',
+                'patient_studies': 'user_patient_studies'
+            }
+
+            table_name = table_mapping.get(selected_database)
+
+            if not table_name:
+                return JsonResponse({'success': False, 'error': 'Invalid database selected'})
+
+            # Check if the table exists, and create it if it doesn't
+            metadata = MetaData(bind=engine)
+            metadata.reflect()
+
+            if table_name not in metadata.tables:
+                # Define the table schema (adjust this according to your actual data structure)
+                new_table = Table(
+                    table_name, metadata,
+                    Column('id', Integer, primary_key=True),
+                    Column('submitters_name', String),
+                    Column('email_address', String),
+                    Column('mailing_address', String),
+                    Column('comment', String),
+                    # Add other dynamic columns as necessary
+                )
+                new_table.create(engine)
+
+            # Insert data into the table
+            table = metadata.tables[table_name]
+            with engine.connect() as conn:
+                conn.execute(table.insert().values(**data))
+
+            return JsonResponse({'success': True})
+
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'error': 'Invalid JSON data'})
+        except ProgrammingError as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})

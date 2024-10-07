@@ -22,5 +22,6 @@ urlpatterns = [
     path('substructure_search/',views.substructure_search,name='substructure_search'),
     path('maccs_search/',views.maccs_search,name='maccs_search'),
     path('get_columns1/',views.get_columns1,name='get_columns1'),
+    path('submit_data/',views.submit_data,name='submit_data'),
     
 ]

@@ -693,3 +693,38 @@ function createDynamicFields(columns) {
 }
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+function submitData() {
+    // Get the selected database (cell_line, animal_studies, patient_studies)
+    const selectedDatabase = document.querySelector('input[name="field"]:checked').value;
+
+    // Collect form data
+    const formData = {
+        submitters_name: document.getElementById('submitters_name').value,
+        email_address: document.getElementById('email_address').value,
+        mailing_address: document.getElementById('mailing_address').value,
+        comment: document.getElementById('comment').value,
+    };
+
+    // Add dynamic fields data (generated based on the selected database)
+    const dynamicFields = document.getElementById('dynamic-fields').querySelectorAll('input');
+    dynamicFields.forEach(field => {
+        formData[field.name] = field.value;
+    });
+
+    // Create a new Excel workbook
+    const workbook = XLSX.utils.book_new();
+
+    // Create a sheet based on the selected database
+    const worksheetData = [
+        Object.keys(formData), // Header row (column names)
+        Object.values(formData) // Data row (user input)
+    ];
+    const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+
+    // Append the worksheet to the workbook
+    XLSX.utils.book_append_sheet(workbook, worksheet, selectedDatabase);
+
+    // Export the Excel file
+    XLSX.writeFile(workbook, 'submitted_data.xlsx');
+}
