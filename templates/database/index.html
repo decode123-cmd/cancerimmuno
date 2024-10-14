@@ -6,48 +6,48 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 
     <!-- Boxicons CSS -->
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.2/css/boxicons.min.css">
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <title>CancerImmunoDB</title>
+    <script src="{% static 'js/script.js' %}"></script>
+    <title>CanImmDB</title>
   </head>
   <body>
     <!-- navbar -->
     <nav class="navbar">
       <div class="logo_item">
         <i class="bx bx-menu" id="sidebarOpen"></i>
-        </i>CancerImmunoDB      </div>
+        </i>CanImmDB      </div>
 
     
 
     
     <div class="navbar_content">
         <a onclick="location.reload()">
-            <i class="bi bi-house-door"></i>
-            <span>Home</span>
+         <i> Home </i>
         </a>
         <a onclick="openSection('information')">
-            <i class='bx bx-info-circle'></i>
-            <span>Information</span>
+            
+            <i>Information</i>
         </a>
         <a onclick="openSection('data-submission')">
-            <i class='bx bx-upload'></i>
-            <span>Data Submission</span>
+            
+            <i>Data Submission</i>
         </a>
         <a onclick="openSection('developers')">
-            <i class='bx bx-code'></i>
-            <span>Developers</span>
+            
+            <i>Developers</i>
         </a>
         <a onclick="openSection('contact')">
-            <i class='bx bx-phone'></i>
-            <span>Contact</span>
+            
+            <i>Contact</i>
         </a>
-        <a onclick="openSection('assistance')">
-            <i class='bx bx-help-circle'></i>
-            <span>Assistance</span>
+        <a onclick="openSection('assistance')">           
+            <i>Assistance</i>
         </a>
         
     </div>
@@ -331,6 +331,7 @@
         <div class="statistics-images">
           <div class="stat-image">
             <img src="{% static 'img/piechart_technique.png'%}" alt="Statistical Information 2">
+            
         </div>
          
       </div>
@@ -522,13 +523,23 @@ CanIMMDB is a manually curated resource which provides comprehensive information
   
       <!-- Detailed Mechanisms Section -->
       <section class="section" id='mechanismSection'>
-          <div class="container">
-              
-              <img src="/static/img/front_img.png" style="width: 95%;
-              margin-top: 20px;">
-            <p>Anticancer agents/drugs can alter  immune associated parameters- cell types, phenotypes and function of the host immune system.The Mechanisms (figure 1) by which anticancer  agents alter immune function include depleting immunosuppressive populations (both in circulation and tumor infiltrating) such as myeloid-derived suppressor cells (MDSCs) and Regulatory T cells. and downregulating PD-L2 mediated immunosuppression.These anticancer agents can trigger immunogenic cell death  and antibody-dependent cellular cytotoxicity (ADCC). Anticancer agents induce various effector cell populations including tumor specific IL-17–producing γδ T cells , IFN-γ producing CD8 T cells,  CD4+ T helper 17 (Th17), Natural killer cells, dendritic cells , macrophages and B cells. Anticancer agents suppress Protumor cytokines including IL-4, IL-10, and IL-13 and induce  anti tumor  immune response by releasing MCP-1, IFN-gamma, IL-17, Upregulating Class I and Class II MHC expression on tumor. In addition to these, many other mechanisms are cataloged in this database.</p>
+        <div class="container">
+          <div class="slider">
+            <div class="slides">
+              <img src="/static/img/front_img.png" style="width: 100%;" alt="Slide 1">
+              <img src="{% static 'img/piechart_technique.png'%}" style="width: 100%;" alt="Statistical Information 2">
+              <img src="{% static 'img/piechart_cancertype.png'%}"style="width: 100%;"  alt="Statistical Information 1">
+              <img src="{% static 'img/piechart_category.png'%}" style="width: 100%;"  alt="Statistical Information 1">
+              <!-- Add more images as needed -->
+            </div>
+            <!-- Navigation buttons -->
+            <button class="prev" onclick="prevSlide()">&#10094;</button>
+            <button class="next" onclick="nextSlide()">&#10095;</button>
           </div>
+          <p>Anticancer agents/drugs can alter  immune associated parameters- cell types, phenotypes and function of the host immune system.The Mechanisms (figure 1) by which anticancer  agents alter immune function include depleting immunosuppressive populations (both in circulation and tumor infiltrating) such as myeloid-derived suppressor cells (MDSCs) and Regulatory T cells. and downregulating PD-L2 mediated immunosuppression.These anticancer agents can trigger immunogenic cell death  and antibody-dependent cellular cytotoxicity (ADCC). Anticancer agents induce various effector cell populations including tumor specific IL-17–producing γδ T cells , IFN-γ producing CD8 T cells,  CD4+ T helper 17 (Th17), Natural killer cells, dendritic cells , macrophages and B cells. Anticancer agents suppress Protumor cytokines including IL-4, IL-10, and IL-13 and induce  anti tumor  immune response by releasing MCP-1, IFN-gamma, IL-17, Upregulating Class I and Class II MHC expression on tumor. In addition to these, many other mechanisms are cataloged in this database.</p>
+        </div>
       </section>
+      
       <!--############################################################################ Tools #########################################################################--> 
       <section class="section" id='2Dsearch' style='display:none;'>
         <div class="heading-container">
@@ -739,7 +750,7 @@ CanIMMDB is a manually curated resource which provides comprehensive information
                     </fieldset>
                       <legend>Select Fields to be SEARCHED</legend>
                       <div class="checkbox-group">
-                        <label><input type="radio" name="field" value="all_fields" onclick="loadColumns_search(this)"> All Fields</label>
+             
                         <label><input type="radio" name="field" value="cell_line" onclick="loadColumns_search(this)"> Search In Cell Line</label>                      
                           <label><input type="radio" name="field" value="animal_studies" onclick="loadColumns_search(this)"> Search In Animal Studies</label>
                           <label><input type="radio" name="field" value="patient_studies" onclick="loadColumns_search(this)"> Search In Patient Studies</label>
@@ -1000,6 +1011,56 @@ function fillExamplesubsForm() {
     document.getElementById('smilesInputsubs').value = 'COC1=CC=CC2=C1C(=O)C1=C(O)C3=C(C[C@](O)(C[C@@H]3O[C@H]3C[C@H](N)[C@H](O)[C@H](C)O3)C(C)=O)C(O)=C1C2=O';
     
 }
+document.addEventListener('DOMContentLoaded', function() {
+  const sidebar = document.querySelector('.sidebar');
+  const expandButton = document.querySelector('.expand_sidebar');
+  const collapseButton = document.querySelector('.collapse_sidebar');
+
+  // Add event listener for expanding the sidebar
+  expandButton.addEventListener('click', function() {
+    sidebar.classList.remove('close');
+    expandButton.style.display = 'none';
+    collapseButton.style.display = 'flex';
+  });
+
+  // Add event listener for collapsing the sidebar
+  collapseButton.addEventListener('click', function() {
+    sidebar.classList.add('close');
+    collapseButton.style.display = 'none';
+    expandButton.style.display = 'flex';
+  });
+});
+let slideIndex = 0;
+const slides = document.querySelector('.slides');
+const totalSlides = slides.children.length;
+
+// Function to move to the next slide
+function nextSlide() {
+  if (slideIndex === totalSlides - 1) {
+    slideIndex = 0; // Loop back to the first slide
+  } else {
+    slideIndex++;
+  }
+  updateSlidePosition();
+}
+
+// Function to move to the previous slide
+function prevSlide() {
+  if (slideIndex === 0) {
+    slideIndex = totalSlides - 1; // Loop to the last slide
+  } else {
+    slideIndex--;
+  }
+  updateSlidePosition();
+}
+
+// Function to update slide position based on slideIndex
+function updateSlidePosition() {
+  const slideWidth = slides.children[0].clientWidth;
+  slides.style.transform = `translateX(-${slideIndex * slideWidth}px)`;
+}
+
+
 
 </script>
 </body>

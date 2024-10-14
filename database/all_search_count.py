@@ -5,10 +5,21 @@ from sqlalchemy import create_engine, text  # Import text from sqlalchemy
 import psycopg2
 
 # Database connection parameters
-connection_url = "postgresql://postgres:ybSxlyKKlCcskPYfuZJwBllGuEyTPmwp@monorail.proxy.rlwy.net:28748/railway"
+# connection_url = "postgresql://postgres:ybSxlyKKlCcskPYfuZJwBllGuEyTPmwp@monorail.proxy.rlwy.net:28748/railway"
+from psycopg2 import sql
+# Database connection parameters
+db_params = {
+    'dbname': 'search',
+    'user': 'postgres',
+    'password': 'new_password',
+    'host': 'localhost',
+    'port': '5432',
+}
+# Construct the connection string in the format SQLAlchemy expects
+connection_string = f"postgresql://{db_params['user']}:{db_params['password']}@{db_params['host']}:{db_params['port']}/{db_params['dbname']}"
 
 # Create the SQLAlchemy engine
-engine = create_engine(connection_url, echo=False)
+engine = create_engine(connection_string, echo=False)
 
 def category():
     try:

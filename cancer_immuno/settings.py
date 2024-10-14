@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-=1jre%2gpy8$d!-yz#(=x2213q2+k2hgoti-gr4$p2yarq-)i1'
-CSRF_TRUSTED_ORIGINS = [ 'https://cancerimmuno-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = [ 'https://cancerimmuno-production.up.railway.app','https://cancerimmuno.azurewebsites.net']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -74,13 +75,25 @@ WSGI_APPLICATION = 'cancer_immuno.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-import dj_database_url
+# import dj_database_url
 
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default='postgresql://postgres:ybSxlyKKlCcskPYfuZJwBllGuEyTPmwp@monorail.proxy.rlwy.net:28748/railway'
+#     )
+# }
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://postgres:ybSxlyKKlCcskPYfuZJwBllGuEyTPmwp@monorail.proxy.rlwy.net:28748/railway'
-    )
+    'default': {
+         'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'search',      # Your database name
+        'USER': 'postgres',          # Your database user
+        'PASSWORD': 'new_password',  # Your database password
+        'HOST': 'localhost',        # Your database host
+        'PORT': '5432',
+        
+    }
 }
+
 
 #postgresql://postgres:yAcChPUaaOWPzUJLCJXwtoRBmEfnfaxw@monorail.proxy.rlwy.net:38139/railway
 # DATABASES = {
@@ -128,7 +141,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
     # Base url to serve media files  
 MEDIA_URL = '/media/'  
-    
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Path where media is stored  
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')  
 # Default primary key field type

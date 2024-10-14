@@ -692,7 +692,7 @@ function createDynamicFields(columns) {
     });
 }
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
 function submitData() {
     // Get the selected database (cell_line, animal_studies, patient_studies)
     const selectedDatabase = document.querySelector('input[name="field"]:checked').value;
