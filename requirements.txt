@@ -55,6 +55,10 @@ jupyterlab_widgets==3.0.11
 MarkupSafe==2.1.5
 matplotlib-inline==0.1.7
 mistune==3.0.2
+mysql==0.0.3
+mysql-connector==2.2.9
+mysql-connector-python==8.4.0
+mysqlclient==2.2.4
 nbclient==0.10.0
 nbconvert==7.16.4
 nbformat==5.10.4
@@ -114,4 +118,5 @@ wcwidth==0.2.13
 webcolors==24.6.0
 webencodings==0.5.1
 websocket-client==1.8.0
+whitenoise==6.7.0
 widgetsnbextension==4.0.11
