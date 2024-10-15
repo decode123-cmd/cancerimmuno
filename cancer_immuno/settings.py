@@ -85,10 +85,10 @@ WSGI_APPLICATION = 'cancer_immuno.wsgi.application'
 DATABASES = {
     'default': {
          'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'search',      # Your database name
+        'NAME': 'postgres',      # Your database name
         'USER': 'postgres',          # Your database user
         'PASSWORD': 'new_password',  # Your database password
-        'HOST': 'localhost',        # Your database host
+        'HOST': 'cannimmuno.postgres.database.azure.com',        # Your database host
         'PORT': '5432',
         
     }
