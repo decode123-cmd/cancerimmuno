@@ -7,7 +7,29 @@ import psycopg2
 from psycopg2 import OperationalError
 
 # Define the connection URL
-connection_url = "postgresql://postgres:ybSxlyKKlCcskPYfuZJwBllGuEyTPmwp@monorail.proxy.rlwy.net:28748/railway"
+from urllib.parse import quote_plus  # To safely handle special characters in the password
+
+# Django DATABASES configuration
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'New_pass12',
+        'HOST': 'cannimmuno.postgres.database.azure.com',
+        'PORT': '5432',
+    }
+}
+
+# Extract the connection parameters from the DATABASES config
+db_name = DATABASES['default']['NAME']
+db_user = DATABASES['default']['USER']
+db_password = DATABASES['default']['PASSWORD']
+db_host = DATABASES['default']['HOST']
+db_port = DATABASES['default']['PORT']
+
+# Create the SQLAlchemy connection URL
+connection_url = f"postgresql://{db_user}:{quote_plus(db_password)}@{db_host}:{db_port}/{db_name}"
 # Create the SQLAlchemy engine
 engine = create_engine(connection_url, echo=False)
 print(engine)

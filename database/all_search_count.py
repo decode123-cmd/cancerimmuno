@@ -8,18 +8,32 @@ import psycopg2
 # connection_url = "postgresql://postgres:ybSxlyKKlCcskPYfuZJwBllGuEyTPmwp@monorail.proxy.rlwy.net:28748/railway"
 from psycopg2 import sql
 # Database connection parameters
-db_params = {
-    'dbname': 'search',
-    'user': 'postgres',
-    'password': 'new_password',
-    'host': 'localhost',
-    'port': '5432',
+from urllib.parse import quote_plus  # To safely handle special characters in the password
+
+# Django DATABASES configuration
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'New_pass12',
+        'HOST': 'cannimmuno.postgres.database.azure.com',
+        'PORT': '5432',
+    }
 }
-# Construct the connection string in the format SQLAlchemy expects
-connection_string = f"postgresql://{db_params['user']}:{db_params['password']}@{db_params['host']}:{db_params['port']}/{db_params['dbname']}"
+
+# Extract the connection parameters from the DATABASES config
+db_name = DATABASES['default']['NAME']
+db_user = DATABASES['default']['USER']
+db_password = DATABASES['default']['PASSWORD']
+db_host = DATABASES['default']['HOST']
+db_port = DATABASES['default']['PORT']
+
+# Create the SQLAlchemy connection URL
+connection_url = f"postgresql://{db_user}:{quote_plus(db_password)}@{db_host}:{db_port}/{db_name}"
 
 # Create the SQLAlchemy engine
-engine = create_engine(connection_string, echo=False)
+engine = create_engine(connection_url, echo=False)
 
 def category():
     try:
