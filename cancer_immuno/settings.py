@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=1jre%2gpy8$d!-yz#(=x2213q2+k2hgoti-gr4$p2yarq-)i1'
 CSRF_TRUSTED_ORIGINS = [ 'https://cancerimmuno-production.up.railway.app','https://cancerimmuno.azurewebsites.net']
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*','cancerimmuno-production.up.railway.app','*']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -141,7 +141,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
     # Base url to serve media files  
 MEDIA_URL = '/media/'  
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Path where media is stored  
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')  
 # Default primary key field type
