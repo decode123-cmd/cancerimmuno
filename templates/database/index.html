@@ -185,7 +185,7 @@
       <section id="information" class="section" style = 'display:none;'>
         <div class='information-section'>
         <div class="information-heading-container">
-            <h2 class="information-heading">Information Page About CancerImmuno</h2>
+            <h2 class="information-heading">Information Page About CanImmDB</h2>
         </div>
         <div class="contents-container">
             <h3 class="contents-heading">Contents</h3>
@@ -197,14 +197,14 @@
             </ul>
         </div>
         <div id="architecture" class="information-subsection">
-            <h3 class="subsection-heading">Architecture of CancerImmuno</h3>
+            <h3 class="subsection-heading">Architecture of CanImmDB</h3>
             <div class="architecture-image">
-                <img src="{% static 'img/fig.png'%}" alt="Architecture of CancerImmuno">
+                <img src="{% static 'img/fig.png'%}" alt="Architecture of CanImmDB">
             </div>
         </div>
  
         <div id="field-description" class="information-subsection">
-          <h3 class="subsection-heading">Brief description of all the fields in CancerImmuno</h3>
+          <h3 class="subsection-heading">Brief Description of all the fields in CanImmDB</h3>
           <table class="field-description-table">
               <thead>
                   <tr>
@@ -321,7 +321,7 @@
         
     </div>
     <div id="statistics" class="information-subsection">
-        <h3 class="subsection-heading">Statistical information about CancerImmuno</h3>
+        <h3 class="subsection-heading">Statistical information about CanImmDB</h3>
         <div class="statistics-images">
             <div class="stat-image">
                 <img src="{% static 'img/piechart_category.png'%}" alt="Statistical Information 1">
@@ -350,15 +350,14 @@
     <div class="data-submission-heading-container">
         <h2 class="data-submission-heading">Data Submission Page</h2>
     </div>
-    <p>This page allows users to submit their data. Users may submit information about an anticancer Drug to the database. All entries submitted by users will be evaluated by the team before adding to the database. For online submission, users need to provide the following information. <a href="#">HELP</a></p>
+    <p>This page allows users to submit their data, including information about an anticancer drug, to the database. All user-submitted entries will be evaluated by the team before being added to the database. For online submission, users need to provide the following information. For more details, see the <a href="#" onclick="openSection('assistance')">HELP</a> page.</p>
     <div class="data-submission-container">
         <form id="data_submission_form" method="POST" action="">
             {% csrf_token %}
             <fieldset style="margin-bottom: 20px;">
                 <legend class="data-submission-legend">Select the database</legend>
                 <div class="checkbox-group">
-                  <label><input type="radio" name="field" value="cell_line" onchange="loadColumns1(this)"> Submit In Cell Line</label>
-                   
+                  <label><input type="radio" name="field" value="cell_line" onchange="loadColumns1(this)"> Submit In Cell Line</label>                   
                     <label><input type="radio" name="field" value="animal_studies" onchange="loadColumns1(this)"> Submit In Animal Studies</label>
                     <label><input type="radio" name="field" value="patient_studies" onchange="loadColumns1(this)"> Submit In Patient Studies</label>
                     
@@ -545,7 +544,7 @@ CanIMMDB is a manually curated resource which provides comprehensive information
         <div class="heading-container">
             <h2 class="heading">2D Similarity Search</h2>
         </div>
-        <p>2D-Search page assists the user to run a 2D similarity search against the Database. After submission of a job, it returns the list of compounds similar to the query structure. The server provides options to choose different parameters like similarity cutoff and search type. For more information see the HELP page.</p>
+        <p>The 2D Search page assists users in running a 2D similarity search against the database. After submitting a job, it returns a list of compounds similar to the query structure. The server provides options to select different parameters, such as similarity cutoff and search type. For more information, see the <a href="#" onclick="openSection('assistance')">HELP</a> page.</p>
         <div class="container">
             <div class="search-container">
                 <form id="2D_search_form" method="POST" action="{% url 'tanimoto_search' %}">
@@ -595,7 +594,7 @@ CanIMMDB is a manually curated resource which provides comprehensive information
       <div class="heading-container">
           <h2 class="heading">3D Similarity Search</h2>
       </div>
-      <p>3D-Search page assists the user to run a 3D similarity search against the Database. After submission of a job, it returns the list of compounds similar to the query structure. The server provides options to choose different parameters like similarity cutoff and search type. For more information see the HELP page.</p>
+      <p>The 3D Search page assists users in running a 3D similarity search against the database. After submitting a job, it returns a list of compounds similar to the query structure. The server provides options to select different parameters, such as similarity cutoff and search type. For more information, see the <a href="#" onclick="openSection('assistance')">HELP</a> page.</p>
       <div class="container">
           <div class="search-container">
               <form id="3D_search_form" method="POST" action="{% url 'third_search' %}">
@@ -645,7 +644,7 @@ CanIMMDB is a manually curated resource which provides comprehensive information
     <div class="heading-container">
         <h2 class="heading">Substructure Search</h2>
     </div>
-    <p>Substructure Search assists the user to find compounds in the Database that contain the query substructure. After submission of a job, it returns the list of compounds that match the query substructure. The server provides options to choose different parameters like search type. For more information see the HELP page.</p>
+    <p>The Substructure Search page helps users find compounds in the database that contain the query substructure. After submitting a job, it returns a list of compounds that match the query substructure. The server provides options to select different parameters, such as search type. For more information, see the <a href="#" onclick="openSection('assistance')">HELP</a> page.</p>
     <div class="container">
         <div class="search-container">
             <form id="substructure_search_form" method="POST" action="{% url 'substructure_search' %}">
@@ -692,7 +691,7 @@ CanIMMDB is a manually curated resource which provides comprehensive information
   <div class="heading-container">
     <h2 class="heading">MACCS Key-Based Similarity Search</h2>
   </div>
-  <p>MACCS Key-Based Search assists the user to run a similarity search against the Database using MACCS keys. After submission of a job, it returns the list of compounds similar to the query structure based on MACCS key similarity. The server provides options to choose different parameters like similarity cutoff and search type. For more information, see the HELP page.</p>
+  <p>The MACCS Key-Based Search page helps users perform a similarity search against the database using MACCS keys. After submitting a job, it returns a list of compounds similar to the query structure based on MACCS key similarity. The server provides options to select different parameters, such as similarity cutoff and search type. For more information, see the <a href="#" onclick="openSection('assistance')">HELP</a> page.</p>
   <div class="container">
     <div class="search-container">
       <form id="maccs_search_form" method="POST" action="{% url 'maccs_search' %}">
@@ -741,7 +740,7 @@ CanIMMDB is a manually curated resource which provides comprehensive information
         <div class="container">
             <div class="search-container">
                 <h1>Basic Search</h1>
-                <p>This module allows user to perform a simple search on any field of CancerImmuno.</p>
+                <p>This module allows users to perform a simple search on any field within the CanImmDB.For more information, see the <a href="#" onclick="openSection('assistance')">HELP</a> page.
                 <form id="searchForm" method="POST" action="{% url 'search' %}">
                     {% csrf_token %}
                     <fieldset>
@@ -776,7 +775,7 @@ CanIMMDB is a manually curated resource which provides comprehensive information
     </section>
     <section id="Category_section" class="section" style = "display:none;" >
       <div class="container">
-  <h1>Master List</h1>
+ 
   <table id="peptides-table">
       <thead>
           <tr>
@@ -834,7 +833,7 @@ CanIMMDB is a manually curated resource which provides comprehensive information
       <div class="container">
           <div class="search-container">
               <h1>Conditional Search</h1>
-              <p>This module is designed to facilitate complex search using multiple queries joined by logical operators like AND/OR. For more information see <a href="#">HELP</a> page.</p>
+              <p>This module is designed to facilitate complex searches using multiple queries combined with logical operators such as AND/OR. For more information, see the <a href="#" onclick="openSection('assistance')">HELP</a> page.
               <form id="conditionalSearchForm" method="POST" action="{% url 'conditional_search' %}">
                 {% csrf_token %}
                   <table>
@@ -854,7 +853,7 @@ CanIMMDB is a manually curated resource which provides comprehensive information
                               <td>1</td>
                               <td>
                                   <select name="table[]" onchange="loadColumns(this, 1)">
-                                    <option value="all_fields">All Fields</option>
+                                   
                                       <option value="cell_line">Cell Line</option>
                                       <option value="animal_studies">Animal Studies</option>
                                       <option value="patient_studies">Patient Studies</option>
